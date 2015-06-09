@@ -14,7 +14,7 @@ void ofApp::setup(){
     gui.add(fHeight.setup( "fHeight", filmHeight, 0, ofGetWindowHeight()));
     gui.add(fPosX.setup( "fPosX", filmPosX, 0, ofGetWindowWidth()));
     gui.add(fPosY.setup( "fPosY", filmPosY, 0, ofGetWindowHeight()));
-
+    showGui = false;
     
     filmToRead.setPixelFormat(OF_PIXELS_RGB);
     ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_TEXTURE_ONLY;
@@ -34,13 +34,22 @@ void ofApp::draw(){
     {
         filmToRead.draw(fPosX, fPosY, fWidth, fHeight);
     }
-    gui.draw();
+    
+    if(showGui)
+    {
+        gui.draw();
+    }
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     if (key == 'f'){
         ofToggleFullscreen();
+    }
+
+    if (key == 'g'){
+        showGui =! showGui;
     }
 
 }
