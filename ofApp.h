@@ -20,10 +20,9 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-        void loadTheNewFilm(int num);
+        void loadTheNewFilm(string l);
         void loadTheNewFilmByLang(string l, int num);
     
-    //ofQTKitPlayer filmToRead;
     ofVideoPlayer filmToRead;
     int filmWidth,filmHeight;
     int filmPosX, filmPosY;
@@ -38,5 +37,7 @@ class ofApp : public ofBaseApp{
     bool showCursor;
     
     string lang;
+    int nbOfLoop;
+    bool loopLangState;
 		
 };
