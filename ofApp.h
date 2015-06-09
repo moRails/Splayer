@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofQTKitPlayer.h"
 #include "ofxGui.h"
 
 class ofApp : public ofBaseApp{
@@ -22,6 +21,7 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
         void loadTheNewFilm(int num);
+        void loadTheNewFilmByLang(string l, int num);
     
     //ofQTKitPlayer filmToRead;
     ofVideoPlayer filmToRead;

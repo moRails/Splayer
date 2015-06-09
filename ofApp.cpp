@@ -24,9 +24,6 @@ void ofApp::setup(){
     showGui = false;
     showCursor = false;
     CGDisplayHideCursor(NULL);
-    //filmToRead.setPixelFormat(OF_PIXELS_RGB);
-    //ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_TEXTURE_ONLY;
-    //filmToRead.loadMovie("blc0.mov", decodeMode);
     filmToRead.loadMovie("blc0.mov");
     filmToRead.play();
     
@@ -35,19 +32,13 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    if (filmToRead.isLoaded())
-    {
         filmToRead.update();
-    }
-    
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    if (filmToRead.isLoaded())
-    {
-        filmToRead.draw(fPosX, fPosY, fWidth, fHeight);
-    }
+   
+    filmToRead.draw(fPosX, fPosY, fWidth, fHeight);
     
     if(showGui)
     {
@@ -58,7 +49,6 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    int numOfTheVideo;
     if (key == 'f'){
         ofToggleFullscreen();
     }
@@ -75,12 +65,16 @@ void ofApp::keyPressed(int key){
             CGDisplayHideCursor(NULL);
         }
     }
-    if (filmToRead.isLoaded() && filmToRead.getCurrentFrame() > 10)
+}
+
+//--------------------------------------------------------------
+void ofApp::keyReleased(int key){
+    if (filmToRead.isLoaded() && filmToRead.getCurrentFrame() > 25)
     {
         switch (key)
         {
             case '1':
-                 //-- Read the blc FR
+                //-- Read the blc FR
                 lang = "FR";
                 loadTheNewFilm(1);
                 break;
@@ -97,11 +91,26 @@ void ofApp::keyPressed(int key){
                 loadTheNewFilm(3);
                 break;
                 
+            case 'a':
+                loadTheNewFilmByLang(lang, 1);
+                break;
+                
+            case 'z':
+                loadTheNewFilmByLang(lang, 2);
+                break;
+                
+            case 'e':
+                loadTheNewFilmByLang(lang, 3);
+                break;
+                
+            case 'r':
+                loadTheNewFilmByLang(lang, 4);
+                break;
+                
             default:
                 break;
         }
     }
-    
 }
 
 //--------------------------------------------------------------
@@ -111,10 +120,11 @@ void ofApp::loadTheNewFilm(int num){
     filmToRead.play();
 }
 
-
 //--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
+void ofApp::loadTheNewFilmByLang(string l, int num){
+    filmToRead.close();
+    filmToRead.loadMovie(l + "/film" + ofToString(num) + ".mp4");
+    filmToRead.play();
 }
 
 //--------------------------------------------------------------
