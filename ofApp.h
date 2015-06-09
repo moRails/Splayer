@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofQTKitPlayer.h"
+#include "ofxGui.h"
 
 class ofApp : public ofBaseApp{
 
@@ -21,6 +22,15 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
     ofQTKitPlayer filmToRead;
-    float filmWidth,filmHeight;
+    int filmWidth,filmHeight;
+    int filmPosX, filmPosY;
+    
+    
+    ofxIntSlider fWidth;
+    ofxIntSlider fHeight;
+    ofxIntSlider fPosX;
+    ofxIntSlider fPosY;
+    ofxPanel gui;
+    bool showGui;
 		
 };

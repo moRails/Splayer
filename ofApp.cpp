@@ -4,8 +4,17 @@
 void ofApp::setup(){
     ofBackground(0, 0, 0);
     
-    filmWidth = ofGetWindowWidth();
-    filmHeight = ofGetWindowHeight();
+    filmWidth  = ofGetWindowWidth(); // change it later with the saving data
+    filmHeight = ofGetWindowHeight(); // change it later with the saving data
+    filmPosX = 0;
+    filmPosY = 0;
+    
+    gui.setup();
+    gui.add(fWidth.setup ( "fWidth",  filmWidth,  0, ofGetWindowWidth()	));
+    gui.add(fHeight.setup( "fHeight", filmHeight, 0, ofGetWindowHeight()));
+    gui.add(fPosX.setup( "fPosX", filmPosX, 0, ofGetWindowWidth()));
+    gui.add(fPosY.setup( "fPosY", filmPosY, 0, ofGetWindowHeight()));
+
     
     filmToRead.setPixelFormat(OF_PIXELS_RGB);
     ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_TEXTURE_ONLY;
@@ -23,12 +32,16 @@ void ofApp::update(){
 void ofApp::draw(){
     if (filmToRead.isLoaded())
     {
-        filmToRead.draw(0, 0, filmWidth, filmHeight);
+        filmToRead.draw(fPosX, fPosY, fWidth, fHeight);
     }
+    gui.draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    if (key == 'f'){
+        ofToggleFullscreen();
+    }
 
 }
 
