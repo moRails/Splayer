@@ -23,7 +23,8 @@ class ofApp : public ofBaseApp{
     
         void loadTheNewFilm(int num);
     
-    ofQTKitPlayer filmToRead;
+    //ofQTKitPlayer filmToRead;
+    ofVideoPlayer filmToRead;
     int filmWidth,filmHeight;
     int filmPosX, filmPosY;
     

@@ -24,13 +24,13 @@ void ofApp::setup(){
     showGui = false;
     showCursor = false;
     CGDisplayHideCursor(NULL);
-    filmToRead.setPixelFormat(OF_PIXELS_RGB);
-    ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_TEXTURE_ONLY;
-    filmToRead.loadMovie("blc0.mov", decodeMode);
+    //filmToRead.setPixelFormat(OF_PIXELS_RGB);
+    //ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_TEXTURE_ONLY;
+    //filmToRead.loadMovie("blc0.mov", decodeMode);
+    filmToRead.loadMovie("blc0.mov");
     filmToRead.play();
     
     lang = "";
-
 }
 
 //--------------------------------------------------------------
@@ -59,7 +59,6 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     int numOfTheVideo;
-    
     if (key == 'f'){
         ofToggleFullscreen();
     }
@@ -76,40 +75,39 @@ void ofApp::keyPressed(int key){
             CGDisplayHideCursor(NULL);
         }
     }
-    
-    switch (key)
+    if (filmToRead.isLoaded() && filmToRead.getCurrentFrame() > 10)
     {
-        case '1':
-             //-- Read the blc FR
-            lang = "FR";
-           loadTheNewFilm(1);
-            break;
-            
-        case '2':
-            //-- Read the blc EN
-            lang = "EN";
-            loadTheNewFilm(2);
-            break;
-            
-        case '3':
-            //-- Read the blc DE
-            lang = "DE";
-            loadTheNewFilm(3);
-            break;
-            
-        default:
-            break;
+        switch (key)
+        {
+            case '1':
+                 //-- Read the blc FR
+                lang = "FR";
+                loadTheNewFilm(1);
+                break;
+                
+            case '2':
+                //-- Read the blc EN
+                lang = "EN";
+                loadTheNewFilm(2);
+                break;
+                
+            case '3':
+                //-- Read the blc DE
+                lang = "DE";
+                loadTheNewFilm(3);
+                break;
+                
+            default:
+                break;
+        }
     }
     
 }
 
 //--------------------------------------------------------------
 void ofApp::loadTheNewFilm(int num){
-    filmToRead.stop();
     filmToRead.close();
-    filmToRead.setPixelFormat(OF_PIXELS_RGB);
-    ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_TEXTURE_ONLY;
-    filmToRead.loadMovie("blc" +ofToString(num) + ".mov", decodeMode);
+    filmToRead.loadMovie("blc" +ofToString(num) + ".mov");
     filmToRead.play();
 }
 
