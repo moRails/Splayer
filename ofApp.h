@@ -21,6 +21,8 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+        void loadTheNewFilm(int num);
+    
     ofQTKitPlayer filmToRead;
     int filmWidth,filmHeight;
     int filmPosX, filmPosY;
@@ -33,5 +35,7 @@ class ofApp : public ofBaseApp{
     ofxPanel gui;
     bool showGui;
     bool showCursor;
+    
+    string lang;
 		
 };
