@@ -15,7 +15,8 @@ void ofApp::setup(){
     gui.add(fPosX.setup( "fPosX", filmPosX, 0, ofGetWindowWidth()));
     gui.add(fPosY.setup( "fPosY", filmPosY, 0, ofGetWindowHeight()));
     showGui = false;
-    
+    showCursor = false;
+    CGDisplayHideCursor(NULL);
     filmToRead.setPixelFormat(OF_PIXELS_RGB);
     ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_TEXTURE_ONLY;
     filmToRead.loadMovie("FILM04_1.mov", decodeMode);
@@ -50,6 +51,15 @@ void ofApp::keyPressed(int key){
 
     if (key == 'g'){
         showGui =! showGui;
+        showCursor = !showCursor;
+        if (showCursor == true)
+        {
+            CGDisplayShowCursor(NULL);
+        }
+        else if ( showCursor == false)
+        {
+            CGDisplayHideCursor(NULL);
+        }
     }
 
 }

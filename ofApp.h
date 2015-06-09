@@ -32,5 +32,6 @@ class ofApp : public ofBaseApp{
     ofxIntSlider fPosY;
     ofxPanel gui;
     bool showGui;
+    bool showCursor;
 		
 };
