@@ -14,6 +14,13 @@ void ofApp::setup(){
     gui.add(fHeight.setup( "fHeight", filmHeight, 0, ofGetWindowHeight()));
     gui.add(fPosX.setup( "fPosX", filmPosX, 0, ofGetWindowWidth()));
     gui.add(fPosY.setup( "fPosY", filmPosY, 0, ofGetWindowHeight()));
+    
+    gui.loadFromFile("settings.xml");
+    fWidth  = fWidth;
+    fHeight = fHeight;
+    fPosX = fPosX;
+    fPosY = fPosY;
+    
     showGui = false;
     showCursor = false;
     CGDisplayHideCursor(NULL);
