@@ -30,6 +30,9 @@ void ofApp::setup(){
     lang = "";
     nbOfLoop = 0;
     loopLangState = false;
+    videoIsPaused = false;
+    animIsplaying = false;
+    timeReleased = 0;
 }
 
 //--------------------------------------------------------------
@@ -41,6 +44,7 @@ void ofApp::update(){
     if(filmToRead.getCurrentFrame() == filmToRead.getTotalNumFrames() && lang != "")
     {
         loadTheNewFilm(lang);
+        animIsplaying = false;
     }
     //-- back to the loop 00
     if (loopLangState)
@@ -75,6 +79,18 @@ void ofApp::draw(){
         ofDrawBitmapString("nbOfLoop = " + ofToString(nbOfLoop), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 40);
         ofDrawBitmapString("CurrentFrame = " + ofToString(filmToRead.getCurrentFrame()), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 60);
         ofDrawBitmapString("TotalFrame = " + ofToString(filmToRead.getTotalNumFrames()), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 80);
+        ofDrawBitmapString("You can pause = " + ofToString(animIsplaying), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 100);
+        bool canPress;
+        if (timeReleasedNew > timeReleased + 1500)
+        {
+            canPress = true;
+        }
+        else
+        {
+            canPress = false;
+        }
+        ofDrawBitmapString("delay is = " + ofToString(canPress), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 120);
+        ofDrawBitmapString("delay value = " + ofToString(timeReleased) + " |   | "+ofToString(timeReleasedNew), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 140);
     }
     
 }
@@ -101,42 +117,72 @@ void ofApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-    if (filmToRead.isLoaded() && filmToRead.getCurrentFrame() > 25)
+    timeReleasedNew = ofGetElapsedTimeMillis();
+    if (filmToRead.isLoaded() && filmToRead.getCurrentFrame() > 25 && timeReleasedNew > timeReleased + 1500)
     {
         switch (key)
         {
             case '1':
                 //-- Read the blc FR
-                lang = "FR";
-                loadTheNewFilm(lang);
+                if (filmToRead.isLoaded())
+                {
+                    lang = "FR";
+                    loadTheNewFilm(lang);
+                }
                 break;
                 
             case '2':
-                //-- Read the blc EN
-                lang = "EN";
-                loadTheNewFilm(lang);
+                if (filmToRead.isLoaded())
+                {
+                    //-- Read the blc EN
+                    lang = "EN";
+                    loadTheNewFilm(lang);
+                }
                 break;
                 
             case '3':
-                //-- Read the blc DE
-                lang = "DE";
-                loadTheNewFilm(lang);
+                if (filmToRead.isLoaded())
+                {
+                    //-- Read the blc DE
+                    lang = "DE";
+                    loadTheNewFilm(lang);
+                }
                 break;
-                
+              
             case 'a':
-                loadTheNewFilmByLang(lang, 1);
+                if (filmToRead.isLoaded())
+                {
+                    loadTheNewFilmByLang(lang, 1);
+                }
                 break;
                 
             case 'z':
-                loadTheNewFilmByLang(lang, 2);
+                if (filmToRead.isLoaded())
+                {
+                    loadTheNewFilmByLang(lang, 2);
+                }
                 break;
                 
             case 'e':
-                loadTheNewFilmByLang(lang, 3);
+                if (filmToRead.isLoaded())
+                {
+                    loadTheNewFilmByLang(lang, 3);
+                }
                 break;
                 
             case 'r':
-                loadTheNewFilmByLang(lang, 4);
+                if (filmToRead.isLoaded())
+                {
+                    loadTheNewFilmByLang(lang, 4);
+                }
+                break;
+            
+            case 'p':
+                if(animIsplaying)
+                {
+                    videoIsPaused = !videoIsPaused;
+                    filmToRead.setPaused(videoIsPaused);
+                }
                 break;
                 
             default:
@@ -148,19 +194,27 @@ void ofApp::keyReleased(int key){
 //--------------------------------------------------------------
 void ofApp::loadTheNewFilm(string l){
     //filmToRead.setLoopState(OF_LOOP_NORMAL);
+    filmToRead.closeMovie();
     filmToRead.close();
     filmToRead.loadMovie(l + "/film0.mov");
-    filmToRead.play();
+    //filmToRead.play();
     loopLangState = true;
+    timeReleased = ofGetElapsedTimeMillis();
 }
 
 //--------------------------------------------------------------
 void ofApp::loadTheNewFilmByLang(string l, int num){
-    filmToRead.close();
-    filmToRead.loadMovie(l + "/film" + ofToString(num) + ".mp4");
-    //filmToRead.setLoopState(OF_LOOP_NONE);
-    filmToRead.play();
-    loopLangState = false;
+    if(lang == "FR" || lang == "EN" || lang == "DE")
+    {
+        filmToRead.closeMovie();
+        filmToRead.close();
+        filmToRead.loadMovie(l + "/film" + ofToString(num) + ".mp4");
+        //filmToRead.setLoopState(OF_LOOP_NONE);
+        //filmToRead.play();
+        loopLangState = false;
+        animIsplaying = true;
+        timeReleased = ofGetElapsedTimeMillis();
+    }
 }
 
 //--------------------------------------------------------------

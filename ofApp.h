@@ -39,5 +39,7 @@ class ofApp : public ofBaseApp{
     string lang;
     int nbOfLoop;
     bool loopLangState;
+    bool videoIsPaused, animIsplaying;
+    long timeReleased, timeReleasedNew;
 		
 };
