@@ -16,10 +16,6 @@ void ofApp::setup(){
     gui.add(fPosY.setup( "fPosY", filmPosY, 0, ofGetWindowHeight()));
     
     gui.loadFromFile("settings.xml");
-    /*fWidth  = fWidth;
-    fHeight = fHeight;
-    fPosX = fPosX;
-    fPosY = fPosY;*/
     
     showGui = false;
     showCursor = false;
@@ -196,11 +192,9 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::loadTheNewFilm(string l){
-    //filmToRead.setLoopState(OF_LOOP_NORMAL);
     filmToRead.closeMovie();
     filmToRead.close();
     filmToRead.loadMovie(l + "/film0.mov");
-    //filmToRead.play();
     loopLangState = true;
     timeReleased = ofGetElapsedTimeMillis();
 }
@@ -212,8 +206,6 @@ void ofApp::loadTheNewFilmByLang(string l, int num){
         filmToRead.closeMovie();
         filmToRead.close();
         filmToRead.loadMovie(l + "/film" + ofToString(num) + ".mp4");
-        //filmToRead.setLoopState(OF_LOOP_NONE);
-        //filmToRead.play();
         loopLangState = false;
         animIsplaying = true;
         timeReleased = ofGetElapsedTimeMillis();
