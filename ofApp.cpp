@@ -16,10 +16,10 @@ void ofApp::setup(){
     gui.add(fPosY.setup( "fPosY", filmPosY, 0, ofGetWindowHeight()));
     
     gui.loadFromFile("settings.xml");
-    fWidth  = fWidth;
+    /*fWidth  = fWidth;
     fHeight = fHeight;
     fPosX = fPosX;
-    fPosY = fPosY;
+    fPosY = fPosY;*/
     
     showGui = false;
     showCursor = false;
@@ -47,22 +47,20 @@ void ofApp::update(){
         animIsplaying = false;
     }
     //-- back to the loop 00
-    if (loopLangState)
+    if(filmToRead.getMoviePath() == "DE/film0.mov" || filmToRead.getMoviePath() == "EN/film0.mov" || filmToRead.getMoviePath() == "FR/film0.mov")
     {
-        //cout << "this is the loop language film" << endl;
-        if(filmToRead.getCurrentFrame() == filmToRead.getTotalNumFrames())
+        cout << " this language loop" << endl;
+        if(filmToRead.getCurrentFrame() == 240)
         {
-            cout << "this is the loop language film" << endl;
             nbOfLoop += 1;
-            
         }
-        if (nbOfLoop > 2)
-        {
-            filmToRead.close();
-            filmToRead.loadMovie("blc0.mov");
-            nbOfLoop = 0;
-            lang = "";
-        }
+    }
+    if (nbOfLoop > 2)
+    {
+        filmToRead.close();
+        filmToRead.loadMovie("blc0.mov");
+        nbOfLoop = 0;
+        lang = "";
     }
 }
 
@@ -91,6 +89,7 @@ void ofApp::draw(){
         }
         ofDrawBitmapString("delay is = " + ofToString(canPress), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 120);
         ofDrawBitmapString("delay value = " + ofToString(timeReleased) + " |   | "+ofToString(timeReleasedNew), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 140);
+        ofDrawBitmapString("Film path = " + filmToRead.getMoviePath(), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 160);
     }
     
 }
@@ -128,6 +127,8 @@ void ofApp::keyReleased(int key){
                 {
                     lang = "FR";
                     loadTheNewFilm(lang);
+                    loopLangState = true;
+
                 }
                 break;
                 
@@ -137,6 +138,7 @@ void ofApp::keyReleased(int key){
                     //-- Read the blc EN
                     lang = "EN";
                     loadTheNewFilm(lang);
+                    loopLangState = true;
                 }
                 break;
                 
@@ -146,6 +148,7 @@ void ofApp::keyReleased(int key){
                     //-- Read the blc DE
                     lang = "DE";
                     loadTheNewFilm(lang);
+                    loopLangState = true;
                 }
                 break;
               
