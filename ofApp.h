@@ -32,6 +32,8 @@ class ofApp : public ofBaseApp{
     ofxIntSlider fHeight;
     ofxIntSlider fPosX;
     ofxIntSlider fPosY;
+    ofxIntSlider infoPosX;
+    ofxIntSlider infoPosY;
     ofxPanel gui;
     bool showGui;
     bool showCursor;

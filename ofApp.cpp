@@ -14,6 +14,8 @@ void ofApp::setup(){
     gui.add(fHeight.setup( "fHeight", filmHeight, 0, ofGetWindowHeight()));
     gui.add(fPosX.setup( "fPosX", filmPosX, 0, ofGetWindowWidth()));
     gui.add(fPosY.setup( "fPosY", filmPosY, 0, ofGetWindowHeight()));
+    gui.add(infoPosX.setup( "infoPosX", filmWidth/2, 0, ofGetWindowWidth()));
+    gui.add(infoPosY.setup( "infoPosY", filmHeight/2, 0, ofGetWindowHeight()));
     
     gui.loadFromFile("settings.xml");
     
@@ -45,7 +47,6 @@ void ofApp::update(){
     //-- back to the loop 00
     if(filmToRead.getMoviePath() == "DE/film0.mov" || filmToRead.getMoviePath() == "EN/film0.mov" || filmToRead.getMoviePath() == "FR/film0.mov")
     {
-        cout << " this language loop" << endl;
         if(filmToRead.getCurrentFrame() == 240)
         {
             nbOfLoop += 1;
@@ -67,14 +68,18 @@ void ofApp::draw(){
     
     if(showGui)
     {
+        ofSetColor(0, 200);
+        ofFill();
+        ofRect(infoPosX - 20,infoPosY - 20,300, 200);
+        ofSetColor(255);
         gui.draw();
-        ofDrawBitmapString("lang = " + lang, ofGetWindowWidth()/2,ofGetWindowHeight()/2);
-        ofDrawBitmapString("FrameRate = " + ofToString(ofGetFrameRate()), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 20);
-        ofDrawBitmapString("nbOfLoop = " + ofToString(nbOfLoop), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 40);
-        ofDrawBitmapString("CurrentFrame = " + ofToString(filmToRead.getCurrentFrame()), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 60);
-        ofDrawBitmapString("TotalFrame = " + ofToString(filmToRead.getTotalNumFrames()), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 80);
-        ofDrawBitmapString("You can pause = " + ofToString(animIsplaying), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 100);
-        bool canPress;
+        ofDrawBitmapString("lang = " + lang, infoPosX,infoPosY);
+        ofDrawBitmapString("FrameRate = " + ofToString(ofGetFrameRate()), infoPosX,infoPosY + 20);
+        ofDrawBitmapString("nbOfLoop = " + ofToString(nbOfLoop), infoPosX,infoPosY + 40);
+        ofDrawBitmapString("CurrentFrame = " + ofToString(filmToRead.getCurrentFrame()), infoPosX,infoPosY + 60);
+        ofDrawBitmapString("TotalFrame = " + ofToString(filmToRead.getTotalNumFrames()), infoPosX,infoPosY + 80);
+        ofDrawBitmapString("You can pause = " + ofToString(animIsplaying), infoPosX,infoPosY + 100);
+        bool canPress; //-- Maybe clear this var i think it's not util
         if (timeReleasedNew > timeReleased + 1500)
         {
             canPress = true;
@@ -83,20 +88,22 @@ void ofApp::draw(){
         {
             canPress = false;
         }
-        ofDrawBitmapString("delay is = " + ofToString(canPress), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 120);
-        ofDrawBitmapString("delay value = " + ofToString(timeReleased) + " |   | "+ofToString(timeReleasedNew), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 140);
-        ofDrawBitmapString("Film path = " + filmToRead.getMoviePath(), ofGetWindowWidth()/2,ofGetWindowHeight()/2 + 160);
+        ofDrawBitmapString("delay is = " + ofToString(canPress), infoPosX,infoPosY + 120);
+        ofDrawBitmapString("delay value = " + ofToString(timeReleased) + " |   | "+ofToString(timeReleasedNew), infoPosX,infoPosY + 140);
+        ofDrawBitmapString("Film path = " + filmToRead.getMoviePath(), infoPosX,infoPosY + 160);
     }
     
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    if (key == 'f'){
+    if (key == 'f')
+    {
         ofToggleFullscreen();
     }
 
-    if (key == 'g'){
+    if (key == 'g')
+    {
         showGui =! showGui;
         showCursor = !showCursor;
         if (showCursor == true)
